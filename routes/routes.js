@@ -1,6 +1,8 @@
 let axios = require("axios");
 let cheerio = require("cheerio");
 let db = require("../models");
+
+
 module.exports = function (app) {
 
     app.get("/scrape",  (req, res) => {
@@ -35,6 +37,16 @@ module.exports = function (app) {
             }
             console.log(data)
             res.json(data);
+        });
+    });
+
+    app.get("/saved", (req, res) => {
+        db.Article.find({}, (err, data) => {
+            let hbsObject = {
+                articles: data
+            };
+            console.log(data);
+            res.render("saved", hbsObject);
         });
     });
 

@@ -1,0 +1,10 @@
+<div>
+    {{#each articles}}
+        {{#if this.saved}}
+            <p>Title: {{this.title}}</p>
+            <p>snip: {{this.snip}}</p>
+            <p>link: {{this.link}}</p>
+            <p>saved: {{this.saved}}</p>
+        {{/if}}
+    {{/each}}
+</div>
