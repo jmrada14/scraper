@@ -23,7 +23,7 @@ $( () => {
     $("#scrape").on("click", event => {
         event.preventDefault();
         $.getJSON("/scrape", () => {
-
+return "hello world"
         });
 
         $.getJSON("/articles", (data) => {
@@ -42,7 +42,7 @@ $( () => {
     });
 
     $(document).on("click", '.saved',  () => {
-        let id = $(this).attr('id');
+        let id = $(this).attr('_id');
         console.log("Article ID: " + id);
 
         $.ajax({

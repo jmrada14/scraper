@@ -46,7 +46,7 @@ module.exports = function (app) {
                 articles: data
             };
             console.log(data);
-            res.render("saved", hbsObject);
+            res.render("savedArt", hbsObject);
         });
     });
 
@@ -56,4 +56,20 @@ module.exports = function (app) {
         res.send("Collection Dropped")
     });
 
+    app.put("/save/:id",  (req, res) => {
+        db.Article.findByIdAndUpdate({ _id: req.params.id }, {
+            $set: { saved: true }
+        }).then( (data) => {
+            res.json(data);
+        });
+    });
+
+    app.put("/delete/:id", (req, res) => {
+        db.Article.findByIdAndUpdate({ _id: req.params.id },
+            {
+                $set: { saved: false }
+            }).then((data) => {
+            res.json(data);
+        });
+    });
 };
