@@ -11,7 +11,7 @@ let ArticleSchema = new Schema({
         required: true
     },
 
-    scraped: {
+    snip: {
         type: String,
         required: true
     },

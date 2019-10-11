@@ -10,9 +10,9 @@ app.use(express.json());
 app.engine("handlebars", exphbs({ layout: "main" }));
 app.set("view engine", "handlebars");
 
-mongoose.connect("mongodb://localhost/scraperhw", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/scraper", {useNewUrlParser: true}).then(r =>{r});
 
-// require("./routes/routes.js")(app);
+ require("./routes/routes.js")(app);
 
 app.listen(3000, function () {
     console.log("App running on port 3000!");
