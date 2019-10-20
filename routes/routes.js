@@ -35,7 +35,6 @@ module.exports = function (app) {
         db.Article.find({}, (err, data) => {
             if(err){return err
             }
-            console.log(data)
             res.json(data);
         });
     });
@@ -45,8 +44,8 @@ module.exports = function (app) {
             let hbsObject = {
                 articles: data
             };
-            console.log(data);
-            res.render("savedArt", hbsObject);
+            // console.log(data);
+            res.render("saved", hbsObject);
         });
     });
 
