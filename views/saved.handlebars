@@ -1,10 +1,54 @@
+<h1>SAVED ARTICLES</h1>
+
 <div>
     {{#each articles}}
         {{#if this.saved}}
-            <p>Title: {{this.title}}</p>
-            <p>snip: {{this.snip}}</p>
-            <p>link: {{this.link}}</p>
-            <p>saved: {{this.saved}}</p>
+            <div class="card" id="savedCard" style="width: 75rem;">
+                <div class="card-body">
+                    <a href="http://nytimes.com{{this.link}}" target="_blank">
+                        <h3 class="card-title">{{this.title}}</h3>
+                    </a>
+                    <p class="card-subtitle mb-2 text-muted">{{this.snip}}</p>
+                    <button type="button" class="btn btn-success addNote" id="{{this._id}}" data-toggle="modal"
+                            data-target=".article">
+                        Note
+                    </button>
+                    <button type="button" class="btn btn-danger deleteArticle" id="{{this._id}}">Delete</button>
+                </div>
+            </div>
         {{/if}}
     {{/each}}
+    <div class="modal fade article" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Notes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="NoteContainer">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="savedNote"></div>
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col-2">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <textarea type="text" class="userNote" rows="4" cols="50" placeholder="New Note"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary saveNote" id="{{this._id}}">Save Note</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

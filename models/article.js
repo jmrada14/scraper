@@ -1,3 +1,4 @@
+
 let mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 let ArticleSchema = new Schema({
@@ -16,6 +17,10 @@ let ArticleSchema = new Schema({
         required: true
     },
 
+    notes: {
+        type: Schema.Types.ObjectId,
+        ref: "Note"
+    },
     saved: {
         type: Boolean,
         default: false

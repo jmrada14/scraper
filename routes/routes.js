@@ -44,13 +44,16 @@ module.exports = function (app) {
             let hbsObject = {
                 articles: data
             };
-            // console.log(data);
             res.render("saved", hbsObject);
         });
     });
 
     app.get("/drop", (req, res) => {
         db.Article.deleteMany({}, () => {
+        });
+        res.send("Collection Dropped")
+
+        db.Note.deleteMany({}, function (err, del) {
         });
         res.send("Collection Dropped")
     });
@@ -71,4 +74,63 @@ module.exports = function (app) {
             res.json(data);
         });
     });
+
+    app.get("/notes", function (req, res) {
+        db.Note.find({}, function (error, data) {
+            console.log(data)
+            res.json(data);
+        });
+    });
+
+    app.put("/saved/:id", function (req, res) {
+        db.Article.findByIdAndUpdate({ _id: req.params.id }, {
+            $set: { saved: true }
+        }).then(function (data) {
+            res.json(data);
+        });
+    });
+
+    app.delete("/delete-Article/:id", function (req, res) {
+        db.Article.findByIdAndUpdate({ _id: req.params.id },
+            {
+                $set: { saved: false }
+            }).then(function (data) {
+            res.json(data);
+        });
+    });
+
+    //Post Note on saved article and create the Notes collection
+    app.post("/articles/:id", function (req, res) {
+        console.log(req.body);
+        db.Note.create(req.body)
+            .then(function (dbNote) {
+                return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { Note: dbNote._id } }, { new: true });
+            })
+            .then(function (dbArticle) {
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+    });
+
+    app.get("/articles/:id", function (req, res) {
+        db.Article.findOne({ _id: req.params.id })
+            .populate("Note")
+            .then(function (dbArticle) {
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+    });
+    //delete Note
+    app.delete("/delete-Note/:id", function (req, res) {
+        db.Note.findByIdAndRemove(req.params.id, (err, Note) => {
+            if (err) return res.status(500).send(err);
+            return res.status(200).send();
+        });
+
+    });
 };
+
